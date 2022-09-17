@@ -11,7 +11,7 @@ metadata = MetadataCatalog.get("_")
 metadata.thing_classes = ['None', 'space']
 
 # Title the page
-st.title("AI store Replenishment App")
+st.title("AI out of stock Replenishment App")
 
 
 @st.cache
