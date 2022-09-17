@@ -1,7 +1,7 @@
 # ai_store
 Ai store out of stock application
 
-![Download model](https://drive.google.com/file/d/1-AOeQ4f8kK_F4yC1UUSYjYtVoi3j0VDf/view?usp=sharing)
+[Download model](https://drive.google.com/file/d/1-AOeQ4f8kK_F4yC1UUSYjYtVoi3j0VDf/view?usp=sharing)
 
 ## Create a model folder and place the downloaded model 
 
