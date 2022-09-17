@@ -1,3 +1,4 @@
+from xmlrpc.client import Boolean
 import streamlit as st
 import cv2
 import numpy as np
@@ -21,9 +22,16 @@ def draw_img(img, metadata, outputs):
 
 
 @st.cache(persist=True)
-def load_img(path):
-    img = cv2.imread(path)
-    return img
+def load_img(path, resize=Boolean):
+    # original image loaded from the image path
+    ori_img = cv2.imread(path)
+    #if true, resize image
+    if resize:
+        height, width = ori_img.shape[:2]
+        resize_img = cv2.resize(ori_img, (round(width / 10), 300), interpolation=cv2.INTER_AREA)
+        return ori_img, resize_img
+    else:
+        return ori_img
 
 @st.cache(persist=True)
 def run_img_inference(predictor, input_img):
@@ -35,19 +43,18 @@ def run_img_inference(predictor, input_img):
 def load_sample_img(predictor):
     sam_img = st.sidebar.selectbox('Sample Images',
                                    ('img1', 'img2', 'img3', 'img4'))
-
     if sam_img == "img1":
-        test_img = load_img('test_img/test1.jpg')
-        st.sidebar.image(test_img, use_column_width=True, channels="BGR")
+        test_img, resize_img = load_img('test_img/test1.jpg', resize=True)
+        st.sidebar.image(resize_img,use_column_width=True, channels="BGR")
     elif sam_img == "img2":
-        test_img = load_img("test_img/test2.jpg")
-        st.sidebar.image(test_img, use_column_width=True, channels='BGR')
+        test_img, resize_img = load_img("test_img/test2.jpg", resize=True)
+        st.sidebar.image(resize_img,use_column_width=True, channels='BGR')
     elif sam_img == "img3":
-        test_img = load_img("test_img/test3.jpg")
-        st.sidebar.image("test_img/test3.jpg")
+        test_img, resize_img = load_img("test_img/test3.jpg", resize=True)
+        st.sidebar.image(resize_img,use_column_width=True, channels='BGR')
     elif sam_img == "img4":
-        test_img = load_img("test_img/test4.jpg")
-        st.sidebar.image("test_img/test4.jpg")
+        test_img, resize_img = load_img("test_img/test4.jpg", resize=True)
+        st.sidebar.image(resize_img,use_column_width=True, channels='BGR')
 
     sidebar_predict_btn = st.sidebar.button('Process Image')
     if sidebar_predict_btn:
